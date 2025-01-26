@@ -1,6 +1,6 @@
 "use client";
 import React, { PropsWithChildren } from 'react'
-import { ThemeProvider as MuiThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider as MuiThemeProvider } from "@mui/material";
 import rtlPlugin from 'stylis-plugin-rtl';
 import { prefixer } from 'stylis';
 import { CacheProvider } from '@emotion/react';
@@ -19,6 +19,7 @@ function Themeprovider({children}:PropsWithChildren) {
   return (
     <CacheProvider value={cacheRtl}>
       <MuiThemeProvider theme={theme}>
+      <CssBaseline />
         {children}
         </MuiThemeProvider>
         </CacheProvider>
