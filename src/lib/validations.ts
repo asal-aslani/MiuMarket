@@ -3,20 +3,20 @@ import { z } from 'zod'
 export const RegisterFormSchema = z.object({
   firstName: z
     .string()
-    .min(2, { message: 'Name must be at least 2 characters long.' })
+    .min(2, { message: 'حداقل دو کارکتر وارد کنید' })
     .trim(),
     lastName: z
     .string()
-    .min(2, { message: 'Name must be at least 2 characters long.' })
+    .min(2, { message: 'حداقل دو کارکتر وارد کنید' })
     .trim(),
-  email: z.string().email({ message: 'Please enter a valid email.' }).trim(),
+  email: z.string().email({ message: 'لطفا یک ایمیل معتبر وارد کنید' }).trim(),
   password: z
     .string()
-    .min(8, { message: 'Be at least 8 characters long' })
-    .regex(/[a-zA-Z]/, { message: 'Contain at least one letter.' })
-    .regex(/[0-9]/, { message: 'Contain at least one number.' })
+    .min(8, { message: 'حداقل هشت کارکتر' })
+    .regex(/[a-zA-Z]/, { message: ' شامل یک حرف' })
+    .regex(/[0-9]/, { message: 'شامل یک عدد' })
     .regex(/[^a-zA-Z0-9]/, {
-      message: 'Contain at least one special character.',
+      message: 'شامل یک کارکتر عجیب باشد',
     })
     .trim(),
 })
