@@ -20,6 +20,7 @@ import {
   InputAdornment,
   IconButton,
   Button,
+  FormHelperText,
 } from "@mui/material";
 import Image from "next/image";
 import { register } from "@/actions/register";
@@ -28,13 +29,11 @@ type Props = {};
 
 const Register: React.FC<Props> = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [state, action] = useActionState(register);  
 
   const handleClickShowPassword = () => setShowPassword((prev) => !prev);
-
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-  };
+  const handleClickShowConfirmPassword = () => setShowConfirmPassword((prev) => !prev);
 
   return (
     <Card sx={{ width: 500, padding: 2 }}>
@@ -66,46 +65,57 @@ const Register: React.FC<Props> = () => {
               helperText={state?.errors.email}
               fullWidth name="email" type="email" id="email" label="ایمیل" variant="outlined" />
 
-            <FormControl fullWidth variant="outlined" error={!!state?.errors.password}>
-              <InputLabel htmlFor="outlined-adornment-password">رمز عبور</InputLabel>
+            <FormControl variant="outlined">
+              <InputLabel error={!!state?.errors?.password} size="small">
+                رمز عبور
+              </InputLabel>
               <OutlinedInput
-                id="outlined-adornment-password"
+                error={!!state?.errors?.password}
+                name="password"
+                size="small"
                 type={showPassword ? "text" : "password"}
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
-                      aria-label={showPassword ? "مخفی کردن رمز عبور" : "نمایش رمز عبور"}
+                      aria-label={
+                        showPassword ? "hide the password" : "display the password"
+                      }
                       onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
                     >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
                     </IconButton>
                   </InputAdornment>
                 }
-                label="رمز عبور"
+                label="Password"
               />
-              {state?.errors.password && (
-                <Typography variant="caption" color="error" sx={{ marginTop: 1 }}>
-                  {state?.errors.password}
-                </Typography>
-              )}
+              <FormHelperText error>
+                {state?.errors.password?.map((e: string) => (
+                  <Box component="span" display="block" key={e}>
+                    {e}
+                  </Box>
+                ))}
+              </FormHelperText>
             </FormControl>
 
-            <Typography variant="caption" sx={{ textAlign: "center" }}>
-              ورود شما به معنای پذیرش <MuiLink href="/terms" target="_blank">شرایط میومارکت</MuiLink> و <MuiLink href="/privacy-policy" target="_blank">قوانین حریم خصوصی</MuiLink> است.
-            </Typography>
-          </Stack>
 
-          <Box sx={{ display: "flex", justifyContent: "center", marginTop: 3 }}>
-            <Button
-              type="submit"
-              variant="contained"
-              sx={{ backgroundColor: "red", "&:hover": { backgroundColor: "darkred" }, paddingX: 4, paddingY: 1 }}
-            >
-              ثبت نام
-            </Button>
-          </Box>
+          <FormHelperText error>
+                {state?.errors?.confirmPassword?.map((e: string) => (
+                  <Box component="span" display="block" key={e}>
+                    {e}
+                  </Box>
+                ))}
+              </FormHelperText>
+
+            <Box sx={{ display: "flex", justifyContent: "center", marginTop: 3 }}>
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{ backgroundColor: "red", "&:hover": { backgroundColor: "darkred" }, paddingX: 4, paddingY: 1 }}
+              >
+                ثبت نام
+              </Button>
+            </Box>
+          </Stack>
         </form>
       </CardContent>
     </Card>

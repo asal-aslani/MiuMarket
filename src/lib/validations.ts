@@ -1,33 +1,38 @@
-import { z } from 'zod'
- 
+import { z } from 'zod';
+
 export const RegisterFormSchema = z.object({
   firstName: z
     .string()
-    .min(2, { message: 'حداقل دو کارکتر وارد کنید' })
-    .trim(),
-    lastName: z
+    .trim()
+    .min(2, { message: 'حداقل دو کارکتر وارد کنید' }),
+
+  lastName: z
     .string()
-    .min(2, { message: 'حداقل دو کارکتر وارد کنید' })
-    .trim(),
-  email: z.string().email({ message: 'لطفا یک ایمیل معتبر وارد کنید' }).trim(),
+    .trim()
+    .min(2, { message: 'حداقل دو کارکتر وارد کنید' }),
+
+  email: z
+    .string()
+    .trim()
+    .email({ message: 'لطفا یک ایمیل معتبر وارد کنید' }),
+
   password: z
     .string()
-    .min(8, { message: 'حداقل هشت کارکتر' })
-    .regex(/[a-zA-Z]/, { message: ' شامل یک حرف' })
-    .regex(/[0-9]/, { message: 'شامل یک عدد' })
-    .regex(/[^a-zA-Z0-9]/, {
-      message: 'شامل یک کارکتر عجیب باشد',
-    })
-    .trim(),
-})
- 
+    .trim()
+    .min(8, { message: 'رمز عبور باید حداقل 8 کاراکتر باشد' })
+    .regex(/[a-zA-Z]/, { message: 'رمز عبور باید شامل حداقل یک حرف باشد' })
+    .regex(/[0-9]/, { message: 'رمز عبور باید شامل حداقل یک عدد باشد' })
+    .regex(/[^a-zA-Z0-9]/, { message: 'رمز عبور باید شامل حداقل یک کاراکتر خاص باشد' }),
+});
+
 export type RegisterFormState =
   | {
       errors?: {
-        name?: string[]
-        email?: string[]
-        password?: string[]
-      }
-      message?: string
+        firstName?: string[];
+        lastName?: string[];
+        email?: string[];
+        password?: string[];
+      };
+      message?: string;
     }
-  | undefined
+  | undefined;
