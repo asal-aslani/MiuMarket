@@ -1,4 +1,7 @@
 import { RegisterFormSchema, RegisterFormState } from "@/lib/validations";
+import { redirect } from "next/navigation";
+
+const BASE_URL=process.env.BASE_URL;
 
 export async function register(state: RegisterFormState, formData: FormData) {
 
@@ -12,7 +15,7 @@ export async function register(state: RegisterFormState, formData: FormData) {
 
   try {
 
-    const res = await fetch("http://localhost:8000/auth/register", {
+    const res = await fetch(`${BASE_URL}/auth/register`, {
       method: "POST",
       body: JSON.stringify(validatedFields.data),
       headers: {
@@ -23,6 +26,12 @@ export async function register(state: RegisterFormState, formData: FormData) {
 
     if (!res.ok) {
       throw new Error(`Server Error: ${res.status}`);
+    }else{
+      await createSession({
+        accessToken: data.token.accessToken,
+        refreshToken: data.token.refreshToken,
+      });
+      redirect('/profile')
     }
 
   
