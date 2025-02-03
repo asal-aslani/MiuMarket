@@ -23,6 +23,14 @@ export const RegisterFormSchema = z.object({
     .regex(/[a-zA-Z]/, { message: 'رمز عبور باید شامل حداقل یک حرف باشد' })
     .regex(/[0-9]/, { message: 'رمز عبور باید شامل حداقل یک عدد باشد' })
     .regex(/[^a-zA-Z0-9]/, { message: 'رمز عبور باید شامل حداقل یک کاراکتر خاص باشد' }),
+
+  confirmPassword: z
+    .string()
+    .trim()
+    .min(8, { message: 'تأیید رمز عبور باید حداقل 8 کاراکتر باشد' })
+}).refine((data) => data.password === data.confirmPassword, {
+  message: 'رمز عبور و تأیید رمز عبور مطابقت ندارند',
+  path: ['confirmPassword'],
 });
 
 export type RegisterFormState =
@@ -32,7 +40,34 @@ export type RegisterFormState =
         lastName?: string[];
         email?: string[];
         password?: string[];
+        confirmPassword?: string[];  // اضافه شدن ارورهای تأیید رمز عبور
       };
       message?: string;
     }
   | undefined;
+  
+    export const LoginFormSchema = z.object({
+      email: z
+        .string()
+        .trim()
+        .email({ message: 'لطفا یک ایمیل معتبر وارد کنید' }),
+    
+      password: z
+        .string()
+        .trim()
+        .min(8, { message: 'رمز عبور باید حداقل 8 کاراکتر باشد' })
+        .regex(/[a-zA-Z]/, { message: 'رمز عبور باید شامل حداقل یک حرف باشد' })
+        .regex(/[0-9]/, { message: 'رمز عبور باید شامل حداقل یک عدد باشد' })
+        .regex(/[^a-zA-Z0-9]/, { message: 'رمز عبور باید شامل حداقل یک کاراکتر خاص باشد' }),
+    });
+    
+    export type LoginFormState =
+      | {
+          errors?: {
+            email?: string[];
+            password?: string[];
+          };
+          message?: string;
+        }
+      | undefined;
+    

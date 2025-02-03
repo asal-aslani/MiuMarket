@@ -19,7 +19,7 @@ import Image from "next/image";
 import React, { useActionState, useState } from "react";
 
 function RegisterForm() {
-  const [state, action] = useActionState(register);
+  const [state, action] = useActionState(register, undefined);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -29,6 +29,7 @@ function RegisterForm() {
 
   return (
     <form action={action}>
+      {/* لوگو */}
       <Box sx={{ display: "flex", justifyContent: "center", marginBottom: 2 }}>
         <Image
           src="/mui.jpg"
@@ -39,6 +40,7 @@ function RegisterForm() {
         />
       </Box>
 
+      {/* عنوان و لینک ورود */}
       <Stack
         direction="row"
         justifyContent="space-between"
@@ -46,10 +48,11 @@ function RegisterForm() {
         sx={{ marginBottom: 2 }}
       >
         <Typography variant="h5">ثبت نام</Typography>
-        <MuiLink href="/auth/login">آیا قبلا ثبت نام کرده‌اید؟</MuiLink>
+        <MuiLink href="/auth/login">آیا قبلاً ثبت‌نام کرده‌اید؟</MuiLink>
       </Stack>
 
       <Stack gap={3}>
+        {/* نام و نام خانوادگی */}
         <Stack
           mt={2}
           gap={2}
@@ -59,8 +62,8 @@ function RegisterForm() {
           sx={{ marginBottom: 2 }}
         >
           <TextField
-            error={!!state?.errors?.firstName} 
-            helperText={state?.errors?.firstName || ""} // مقدار پیش‌فرض خالی برای جلوگیری از undefined
+            error={!!state?.errors?.firstName}
+            helperText={state?.errors?.firstName?.[0] || ""}
             fullWidth
             name="firstName"
             id="first-name"
@@ -69,7 +72,7 @@ function RegisterForm() {
           />
           <TextField
             error={!!state?.errors?.lastName}
-            helperText={state?.errors?.lastName || ""}
+            helperText={state?.errors?.lastName?.[0] || ""}
             fullWidth
             name="lastName"
             id="last-name"
@@ -78,9 +81,10 @@ function RegisterForm() {
           />
         </Stack>
 
+        {/* ایمیل */}
         <TextField
           error={!!state?.errors?.email}
-          helperText={state?.errors?.email || ""}
+          helperText={state?.errors?.email?.[0] || ""}
           fullWidth
           name="email"
           type="email"
@@ -89,46 +93,60 @@ function RegisterForm() {
           variant="outlined"
         />
 
-        <FormControl variant="outlined">
-          <InputLabel error={!!state?.errors?.password} size="small">
-            رمز عبور
-          </InputLabel>
+        {/* رمز عبور */}
+        <FormControl variant="outlined" error={!!state?.errors?.password}>
+          <InputLabel size="small">رمز عبور</InputLabel>
           <OutlinedInput
-            error={!!state?.errors?.password}
             name="password"
             size="small"
             type={showPassword ? "text" : "password"}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
-                  aria-label={
-                    showPassword ? "hide the password" : "display the password"
-                  }
+                  aria-label={showPassword ? "عدم نمایش رمز" : "نمایش رمز"}
                   onClick={handleClickShowPassword}
+                  edge="end"
                 >
                   {showPassword ? <Visibility /> : <VisibilityOff />}
                 </IconButton>
               </InputAdornment>
             }
-            label="Password"
+            label="رمز عبور"
           />
-          <FormHelperText error>
-            {(state?.errors?.password || []).map((e: string) => (
-              <Box component="span" display="block" key={e}>
-                {e}
-              </Box>
-            ))}
+          <FormHelperText>
+            {state?.errors?.password?.[0] || ""}
           </FormHelperText>
         </FormControl>
 
-        <FormHelperText error>
-          {(state?.errors?.confirmPassword || []).map((e: string) => (
-            <Box component="span" display="block" key={e}>
-              {e}
-            </Box>
-          ))}
-        </FormHelperText>
+        {/* تایید رمز عبور */}
+        <FormControl variant="outlined">
+  <InputLabel error={!!state?.errors?.confirmPassword} size="small">
+    تأیید رمز عبور
+  </InputLabel>
+  <OutlinedInput
+    error={!!state?.errors?.confirmPassword}
+    name="confirmPassword"
+    size="small"
+    type={showConfirmPassword ? "text" : "password"}
+    endAdornment={
+      <InputAdornment position="end">
+        <IconButton onClick={handleClickShowConfirmPassword}>
+          {showConfirmPassword ? <Visibility /> : <VisibilityOff />}
+        </IconButton>
+      </InputAdornment>
+    }
+    label="تأیید رمز عبور"
+  />
+  <FormHelperText error>
+    {(state?.errors?.confirmPassword || []).map((e: string) => (
+      <Box component="span" display="block" key={e}>
+        {e}
+      </Box>
+    ))}
+  </FormHelperText>
+</FormControl>
 
+        {/* دکمه ثبت‌نام */}
         <Box sx={{ display: "flex", justifyContent: "center", marginTop: 3 }}>
           <Button
             type="submit"
@@ -143,10 +161,9 @@ function RegisterForm() {
             ثبت نام
           </Button>
         </Box>
-        <Typography
-          variant="caption"
-          sx={{ textAlign: "center", marginTop: 2 }}
-        >
+
+        {/* شرایط و قوانین */}
+        <Typography variant="caption" sx={{ textAlign: "center", marginTop: 2 }}>
           ورود شما به معنای پذیرش{" "}
           <MuiLink href="/terms" target="_blank" sx={{ mx: 0.5 }}>
             شرایط میومارکت

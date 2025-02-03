@@ -1,7 +1,7 @@
 import 'server-only'
 import { cookies } from 'next/headers'
  
-export async function createSession(token: {
+export async function createSession(tokens: {
     accessToken:string ,
      refreshToken:string,
     }) {
@@ -9,7 +9,7 @@ export async function createSession(token: {
   const refreshExpiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
   const cookieStore = await cookies()
  
-  cookieStore.set('accessToken', token.accessToken, {
+  cookieStore.set('accessToken', tokens.accessToken, {
     httpOnly: true,
     secure: true,
     expires: accessExpiresAt,
@@ -17,7 +17,7 @@ export async function createSession(token: {
     path: '/',
   })
 
-cookieStore.set('refreshToken', token.refreshToken, {
+cookieStore.set('refreshToken', tokens.refreshToken, {
     httpOnly: true,
     secure: true,
     expires: refreshExpiresAt,
