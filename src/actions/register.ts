@@ -1,3 +1,5 @@
+'use server'
+import "server-only";
 import { RegisterFormSchema, RegisterFormState } from "@/lib/validations";
 import { redirect } from "next/navigation";
 
