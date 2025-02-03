@@ -6,7 +6,7 @@ import { createSession } from "@/lib/session";
 
 
 
-const BASE_URL=process.env.BASE_URL;
+
 
 export async function login(state: LoginFormState, formData: FormData) {
 
@@ -19,7 +19,7 @@ export async function login(state: LoginFormState, formData: FormData) {
   }
 
   
-    const res = await fetch(`${BASE_URL}/auth/login`, {
+    const res = await fetch("http://localhost:8000/auth/login", {
       method: "POST",
       body: JSON.stringify(validatedFields.data),
       headers: {
@@ -38,7 +38,7 @@ export async function login(state: LoginFormState, formData: FormData) {
         refreshToken: data.tokens.refreshToken,
       });
       
-      redirect('/dashboard');
+      redirect('/auth/dashboard');
     }
 
   } 

@@ -4,7 +4,6 @@ import { RegisterFormSchema, RegisterFormState } from "@/lib/validations";
 import { redirect } from "next/navigation";
 import { createSession } from "@/lib/session";
 
-const BASE_URL = process.env.BASE_URL;
 
 export async function register(state: RegisterFormState, formData: FormData) {
   // اعتبارسنجی داده‌های فرم با Zod
@@ -19,7 +18,7 @@ export async function register(state: RegisterFormState, formData: FormData) {
 
   
     // ارسال درخواست ثبت‌نام به API
-    const res = await fetch(`${BASE_URL}/auth/register`, {
+    const res = await fetch("http://localhost:8000/auth/register", {
       method: "POST",
       body: JSON.stringify(validatedFields.data),
       headers: {
@@ -54,7 +53,7 @@ export async function register(state: RegisterFormState, formData: FormData) {
     });
 
     // ریدایرکت به داشبورد پس از ثبت‌نام موفق
-    redirect('/dashboard');
+    redirect('/auth/dashboard');
 
   } 
   
