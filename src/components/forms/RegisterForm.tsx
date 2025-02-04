@@ -15,7 +15,6 @@ import {
   FormHelperText,
   Button,
 } from "@mui/material";
-import Image from "next/image";
 import React, { useActionState, useState } from "react";
 
 function RegisterForm() {
@@ -29,18 +28,21 @@ function RegisterForm() {
 
   return (
     <form action={action}>
-      {/* لوگو */}
-      <Box sx={{ display: "flex", justifyContent: "center", marginBottom: 2 }}>
-        <Image
-          src="/mui.jpg"
-          alt="Logo"
-          width={100}
-          height={100}
-          style={{ objectFit: "contain", borderRadius: "50%" }}
-        />
-      </Box>
-
-      {/* عنوان و لینک ورود */}
+<Box sx={{ display: "flex", justifyContent: "center", marginBottom: 2 }}>
+  <Typography
+    variant="h6"
+    noWrap
+    component="div"
+    sx={{ 
+      display: { xs: 'none', sm: 'block' },
+      color: 'red',           
+      fontSize: '1.8rem',  
+      fontWeight: 'bold'     
+    }}
+  >
+    MiuMarket
+  </Typography>
+</Box>
       <Stack
         direction="row"
         justifyContent="space-between"
