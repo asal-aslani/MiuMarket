@@ -1,11 +1,14 @@
-function DashboardLayout({
+import DashboardHeader from "@/components/dashboard-layout/header";
+
+export default function DashboardLayout({
     children,
   }: Readonly<{
     children: React.ReactNode;
   }>) {
   return (
-    <div>{children}</div>
+    <div>
+      <DashboardHeader/>
+      {children}
+      </div>
   )
 }
-
-export default DashboardLayout
