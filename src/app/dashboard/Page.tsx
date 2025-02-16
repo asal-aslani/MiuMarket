@@ -1,8 +1,9 @@
-import DashboardHeader from "@/components/dashboard-layout/header";
+import SideBar from "@/components/dashboard-layout/side-bar";
+
 
 export default function Dashboard(){
     return (
-        <DashboardHeader/>
+        <SideBar/>
     )
         
     

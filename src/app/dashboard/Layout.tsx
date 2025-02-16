@@ -1,14 +1,15 @@
-import DashboardHeader from "@/components/dashboard-layout/header";
+import { DrawerHeader } from "@/components/dashboard-layout/DrawerHeader";
+import { Box } from "@mui/material";
 
-export default function DashboardLayout({
-    children,
-  }: Readonly<{
-    children: React.ReactNode;
-  }>) {
+export default function DashboardLayout({}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <div>
-      <DashboardHeader/>
-      {children}
-      </div>
-  )
+    <Box sx={{ display: "flex" }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <DrawerHeader />
+        
+      </Box>
+    </Box>
+  );
 }

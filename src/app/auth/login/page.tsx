@@ -1,12 +1,13 @@
 
-import LoginForm from "@/components/forms/LoginForm";
+
+import LoginForm from "@/components/forms/loginForm";
 import { Card, CardContent } from "@mui/material";
 
 function login () {
   return (
     <Card sx={{ width: 500, padding: 2 }}>
       <CardContent>
-<LoginForm/>
+      <LoginForm/>
       </CardContent>
     </Card>
   );
